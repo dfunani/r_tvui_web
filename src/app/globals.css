@@ -1,26 +1,125 @@
 @import "tailwindcss";
 
+/* GoTyme / R-TVUI palette */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --gt-bg: #0b1020;
+  --gt-bg-2: #101730;
+  --gt-panel: #141b36;
+  --gt-code: #0e1430;
+  --gt-ink: #eef1ff;
+  --gt-muted: #a7afd6;
+  --gt-code-text: #cde0ff;
+  --gt-accent: #7c9cff;
+  --gt-accent-2: #5ee0c8;
+  --gt-ok: #7af0c4;
+  --gt-warn: #ffb86b;
+  --gt-line: rgba(255, 255, 255, 0.08);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(160deg, var(--gt-bg) 0%, var(--gt-bg-2) 100%);
+  color: var(--gt-ink);
+  min-height: 100vh;
+}
+
+.doc-content h2 {
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--gt-accent);
+}
+
+.doc-content h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--gt-accent-2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.doc-content p {
+  color: var(--gt-muted);
+  line-height: 1.65;
+}
+
+.doc-content ul,
+.doc-content ol {
+  margin: 0.75rem 0;
+  padding-left: 1.25rem;
+  color: var(--gt-muted);
+}
+
+.doc-content li {
+  margin: 0.35rem 0;
+}
+
+.doc-content a {
+  color: var(--gt-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.doc-content a:hover {
+  color: var(--gt-accent-2);
+}
+
+.doc-content table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  margin: 1rem 0;
+}
+
+.doc-content th,
+.doc-content td {
+  border-bottom: 1px solid var(--gt-line);
+  padding: 0.65rem 0.75rem;
+  text-align: left;
+}
+
+.doc-content th {
+  color: var(--gt-muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.doc-content strong {
+  color: var(--gt-ink);
+  font-weight: 600;
+}
+
+.card {
+  border: 1px solid var(--gt-line);
+  border-radius: 1rem;
+  background: var(--gt-panel);
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+.pill {
+  display: inline-block;
+  border-radius: 999px;
+  border: 1px solid var(--gt-line);
+  padding: 0.15rem 0.65rem;
+  font-size: 0.75rem;
+  color: var(--gt-muted);
+}
+
+.pill-ok {
+  color: var(--gt-ok);
+  border-color: rgba(122, 240, 196, 0.25);
+  background: rgba(122, 240, 196, 0.08);
 }

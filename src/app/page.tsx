@@ -1,65 +1,123 @@
-import Image from "next/image";
+import Link from "next/link";
+import { CodeBlock } from "@/components/code-block";
+import { INSTALL_SNIPPET, SITE } from "@/lib/site";
 
-export default function Home() {
+const audiences = [
+  {
+    title: "Users",
+    description:
+      "Download a single binary, open your terminal, and browse files with Vim-style keys and a Mac Finder-style split view.",
+    href: "/docs/getting-started",
+    cta: "Get started",
+  },
+  {
+    title: "Developers",
+    description:
+      "Rust workspace with core, filesystem, and app crates. Extend previewers, themes, and async listing without blocking the UI.",
+    href: "/docs/architecture",
+    cta: "Architecture",
+  },
+  {
+    title: "Contributors",
+    description:
+      "MIT-licensed, documented milestones, and clear module boundaries in src/ and crates/. PRs and issues welcome on GitHub.",
+    href: "/docs/contributing",
+    cta: "Contributing guide",
+  },
+];
+
+const features = [
+  "Finder-style browser: folder contents in the right pane",
+  "Enter to preview text; system default app for binaries",
+  "Five terminal-friendly themes with persisted config",
+  "Single static binary — no runtime beyond your shell",
+];
+
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
+    <div>
+      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
+        <p className="pill pill-ok mb-4">Terminal · Rust · Keyboard-first</p>
+        <h1 className="max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">
+          {SITE.tagline}
+        </h1>
+        <p className="mt-5 max-w-2xl text-lg text-[var(--gt-muted)]">
+          {SITE.description}
+        </p>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <Link
+            href="/docs/getting-started"
+            className="rounded-xl bg-[var(--gt-accent)] px-5 py-2.5 text-sm font-semibold text-[var(--gt-bg)] transition hover:opacity-90"
+          >
+            Read the docs
+          </Link>
+          <Link
+            href="/download"
+            className="rounded-xl border border-[var(--gt-line)] bg-[var(--gt-panel)] px-5 py-2.5 text-sm font-medium text-[var(--gt-ink)] transition hover:border-[var(--gt-accent)]"
+          >
+            Download
+          </Link>
           <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            href={SITE.repoUrl}
             target="_blank"
             rel="noopener noreferrer"
+            className="rounded-xl px-5 py-2.5 text-sm font-medium text-[var(--gt-muted)] transition hover:text-[var(--gt-ink)]"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
+            View on GitHub →
           </a>
         </div>
-      </main>
+        <div className="mt-12">
+          <CodeBlock title="Quick install (macOS Apple Silicon)">
+            {INSTALL_SNIPPET.macosArm}
+          </CodeBlock>
+        </div>
+      </section>
+
+      <section className="border-y border-[var(--gt-line)] bg-[var(--gt-panel)]/40 py-14">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <h2 className="text-xl font-semibold text-[var(--gt-accent)]">
+            Why R-TVUI?
+          </h2>
+          <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+            {features.map((f) => (
+              <li
+                key={f}
+                className="flex gap-2 text-[var(--gt-muted)] before:text-[var(--gt-accent-2)] before:content-['▸']"
+              >
+                {f}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+        <h2 className="text-xl font-semibold text-[var(--gt-ink)]">
+          Built for everyone in the project
+        </h2>
+        <p className="mt-2 max-w-2xl text-[var(--gt-muted)]">
+          Like the Django or Homebrew sites, this documentation hub separates
+          what you need depending on how you use the project.
+        </p>
+        <div className="mt-10 grid gap-6 md:grid-cols-3">
+          {audiences.map((a) => (
+            <div key={a.title} className="card flex flex-col">
+              <h3 className="text-lg font-semibold text-[var(--gt-accent-2)]">
+                {a.title}
+              </h3>
+              <p className="mt-2 flex-1 text-sm text-[var(--gt-muted)]">
+                {a.description}
+              </p>
+              <Link
+                href={a.href}
+                className="mt-4 text-sm font-medium text-[var(--gt-accent)] hover:underline"
+              >
+                {a.cta} →
+              </Link>
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
