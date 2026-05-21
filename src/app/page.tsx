@@ -96,8 +96,8 @@ export default function HomePage() {
           Built for everyone in the project
         </h2>
         <p className="mt-2 max-w-2xl text-[var(--gt-muted)]">
-          Like the Django or Homebrew sites, this documentation hub separates
-          what you need depending on how you use the project.
+          Install from GitHub Releases in a few commands — no package manager
+          setup required.
         </p>
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {audiences.map((a) => (

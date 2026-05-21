@@ -29,9 +29,9 @@ export const DOCS_NAV: DocSection[] = [
     title: "For users",
     items: [
       {
-        title: "Install & download",
+        title: "Install",
         href: "/docs/install",
-        description: "Binaries, PATH, requirements",
+        description: "GitHub Releases, .deb, tar/zip",
       },
       {
         title: "Using R-TVUI",

@@ -13,16 +13,8 @@ export default function DocsIndexPage() {
       description="Guides for users, developers, and contributors — the R-TVUI knowledge base."
     >
       <p>
-        This site mirrors the role of project hubs like{" "}
-        <a href="https://www.djangoproject.com/" target="_blank" rel="noopener noreferrer">
-          django.com
-        </a>{" "}
-        or{" "}
-        <a href="https://brew.sh/" target="_blank" rel="noopener noreferrer">
-          brew.sh
-        </a>
-        : one place to learn what the tool does, how to install it, and how to
-        work on the codebase.
+        One place to learn what the tool does, how to download it from GitHub
+        Releases, and how to work on the codebase.
       </p>
 
       <div className="mt-8 space-y-10">

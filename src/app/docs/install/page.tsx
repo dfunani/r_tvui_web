@@ -1,40 +1,64 @@
 import Link from "next/link";
 import { DocPage } from "@/components/doc-page";
 
-export const metadata = { title: "Install & download" };
+export const metadata = { title: "Install" };
 
 export default function InstallPage() {
   return (
     <DocPage
-      title="Install & download"
-      description="Get R-TVUI on your machine without installing Rust."
+      title="Install"
+      description="The simplest ways to get R-TVUI on your machine."
     >
+      <h2>Recommended: GitHub Releases</h2>
       <p>
-        The recommended path for most users is a <strong>prebuilt binary</strong>{" "}
-        from GitHub Releases. Developers can build from source with Cargo.
+        Every tagged release includes ready-to-run binaries. No Homebrew tap, no
+        apt repository setup, no Rust toolchain.
       </p>
+      <ol>
+        <li>
+          Open{" "}
+          <a
+            href="https://github.com/dfunani/r_tvui/releases"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub Releases
+          </a>
+        </li>
+        <li>Download the asset for your OS (see table on the Download page)</li>
+        <li>Extract or install the <code className="font-mono">.deb</code></li>
+        <li>Run <code className="font-mono">r_tvui</code></li>
+      </ol>
 
       <p>
-        Step-by-step install commands for every platform live on the{" "}
-        <Link href="/download">Download page</Link>.
+        Step-by-step commands: <Link href="/download">Download</Link>.
       </p>
 
-      <h2>Put the binary on your PATH</h2>
+      <h2>Linux: two easy options</h2>
       <ul>
         <li>
-          macOS: <code className="font-mono">/usr/local/bin</code> or{" "}
+          <strong>Ubuntu / Debian</strong> — download{" "}
+          <code className="font-mono">r-tvui_*_amd64.deb</code>, then{" "}
+          <code className="font-mono">sudo apt install ./r-tvui_*.deb</code>
+        </li>
+        <li>
+          <strong>Any distro</strong> — download the{" "}
+          <code className="font-mono">.tar.gz</code>, extract, move to{" "}
           <code className="font-mono">~/.local/bin</code>
         </li>
-        <li>Linux: <code className="font-mono">~/.local/bin</code></li>
-        <li>Windows: add the extract folder to PATH in System Settings</li>
       </ul>
 
-      <h2>Configuration directory</h2>
+      <h2>macOS & Windows</h2>
       <p>
-        Settings are stored at{" "}
-        <code className="font-mono">~/.config/rtvui/config.toml</code>. The app
-        creates this when you change themes. Override with{" "}
-        <code className="font-mono">RTVUI_CONFIG=/path/to/config.toml</code>.
+        Download the <code className="font-mono">.tar.gz</code> (Mac) or{" "}
+        <code className="font-mono">.zip</code> (Windows), extract, run the binary.
+      </p>
+
+      <h2>Configuration</h2>
+      <p>
+        Themes persist at{" "}
+        <code className="font-mono">~/.config/rtvui/config.toml</code> after you
+        press <code className="font-mono">t</code> in the app.
       </p>
 
       <h2>Troubleshooting</h2>
@@ -48,29 +72,18 @@ export default function InstallPage() {
         <tbody>
           <tr>
             <td>command not found</td>
-            <td>Ensure install directory is on PATH</td>
+            <td>Add the binary to PATH or run with ./r_tvui</td>
           </tr>
           <tr>
-            <td>Colors look wrong</td>
-            <td>Use a true-color terminal; try theme <code className="font-mono">mono</code></td>
+            <td>Linux: file won&apos;t open on Enter</td>
+            <td>sudo apt install xdg-utils</td>
           </tr>
           <tr>
-            <td>Enter does not open files (Linux)</td>
-            <td>Install <code className="font-mono">xdg-utils</code></td>
-          </tr>
-          <tr>
-            <td>macOS quarantine warning</td>
-            <td>
-              <code className="font-mono">xattr -d com.apple.quarantine r_tvui</code>
-            </td>
+            <td>macOS security block</td>
+            <td>xattr -d com.apple.quarantine r_tvui</td>
           </tr>
         </tbody>
       </table>
-
-      <p>
-        Maintainers: see <Link href="/docs/distribution">Distribution</Link> for
-        building releases and CI.
-      </p>
     </DocPage>
   );
 }
