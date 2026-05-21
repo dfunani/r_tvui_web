@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CodeBlock } from "@/components/code-block";
-import { INSTALL_SNIPPET, SITE } from "@/lib/site";
+import { getSiteConfig } from "@/lib/site-config";
+import { installSnippets } from "@/lib/site";
 
 const audiences = [
   {
@@ -28,21 +29,24 @@ const audiences = [
 
 const features = [
   "Finder-style browser: folder contents in the right pane",
-  "Enter to preview text; system default app for binaries",
+  "Side-pane preview; Enter opens files when a default app exists",
   "Five terminal-friendly themes with persisted config",
   "Single static binary — no runtime beyond your shell",
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const site = getSiteConfig();
+  const snippets = installSnippets(site);
+
   return (
     <div>
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
         <p className="pill pill-ok mb-4">Terminal · Rust · Keyboard-first</p>
         <h1 className="max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">
-          {SITE.tagline}
+          {site.tagline}
         </h1>
         <p className="mt-5 max-w-2xl text-lg text-[var(--gt-muted)]">
-          {SITE.description}
+          {site.description}
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Link
@@ -58,7 +62,7 @@ export default function HomePage() {
             Download
           </Link>
           <a
-            href={SITE.repoUrl}
+            href={site.repoUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-xl px-5 py-2.5 text-sm font-medium text-[var(--gt-muted)] transition hover:text-[var(--gt-ink)]"
@@ -68,7 +72,7 @@ export default function HomePage() {
         </div>
         <div className="mt-12">
           <CodeBlock title="Quick install (macOS Apple Silicon)">
-            {INSTALL_SNIPPET.macosArm}
+            {snippets.macosArm}
           </CodeBlock>
         </div>
       </section>

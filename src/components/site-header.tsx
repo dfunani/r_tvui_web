@@ -1,17 +1,20 @@
 import Link from "next/link";
-import { MAIN_NAV, SITE } from "@/lib/site";
+import type { SiteConfig } from "@/lib/site-config";
+import { mainNav } from "@/lib/site";
 
-export function SiteHeader() {
+export function SiteHeader({ site }: { site: SiteConfig }) {
+  const nav = mainNav(site);
+
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--gt-line)] bg-[var(--gt-bg)]/90 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-6 px-4 sm:px-6">
         <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight">
           <span className="rounded-md bg-[var(--gt-accent)]/15 px-2 py-0.5 text-sm text-[var(--gt-accent-2)]">
-            R-TVUI
+            {site.name}
           </span>
         </Link>
         <nav className="flex items-center gap-1 text-sm">
-          {MAIN_NAV.map((item) =>
+          {nav.map((item) =>
             "external" in item && item.external ? (
               <a
                 key={item.href}
@@ -34,7 +37,7 @@ export function SiteHeader() {
           )}
         </nav>
       </div>
-      <div className="sr-only">{SITE.description}</div>
+      <div className="sr-only">{site.description}</div>
     </header>
   );
 }

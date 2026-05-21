@@ -1,11 +1,15 @@
 import Link from "next/link";
 import { CodeBlock } from "@/components/code-block";
 import { DocPage } from "@/components/doc-page";
-import { INSTALL_SNIPPET } from "@/lib/site";
+import { getSiteConfig } from "@/lib/site-config";
+import { installSnippets } from "@/lib/site";
 
 export const metadata = { title: "Getting started" };
 
-export default function GettingStartedPage() {
+export default async function GettingStartedPage() {
+  const site = getSiteConfig();
+  const snippets = installSnippets(site);
+
   return (
     <DocPage
       title="Getting started"
@@ -20,31 +24,31 @@ export default function GettingStartedPage() {
       <p>
         Download from{" "}
         <Link href="/download">Download</Link> or{" "}
-        <a
-          href="https://github.com/dfunani/r_tvui/releases"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a href={site.releasesUrl} target="_blank" rel="noopener noreferrer">
           GitHub Releases
         </a>
         . That is the only install step for most users.
       </p>
 
       <h2>2. Run</h2>
-      <CodeBlock>r_tvui</CodeBlock>
-      <p>Opens in your current directory. Use from any folder:</p>
-      <CodeBlock>cd ~/Projects && r_tvui</CodeBlock>
+      <CodeBlock>{`r_tvui
+r_tvui ~/Projects    # open a specific folder`}</CodeBlock>
+      <p>
+        Press <code className="font-mono">?</code> in the app for the full key list.{" "}
+        <code className="font-mono">Esc</code> quits when no filter is active.
+      </p>
 
       <h2>3. Learn the keys</h2>
       <p>
         See <Link href="/docs/usage">Using R-TVUI</Link>. Essentials:{" "}
         <code className="font-mono">j</code>/<code className="font-mono">k</code> move,{" "}
         <code className="font-mono">l</code> open folder, Enter on files,{" "}
-        <code className="font-mono">h</code> parent, <code className="font-mono">q</code> quit.
+        <code className="font-mono">h</code> parent, <code className="font-mono">?</code> help,{" "}
+        <code className="font-mono">q</code> quit.
       </p>
 
       <h2>Developers</h2>
-      <CodeBlock title="From source">{INSTALL_SNIPPET.fromSource}</CodeBlock>
+      <CodeBlock title="From source">{snippets.fromSource}</CodeBlock>
     </DocPage>
   );
 }

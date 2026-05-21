@@ -2,8 +2,11 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { SITE } from "@/lib/site";
+import { getSiteConfig } from "@/lib/site-config";
 import "./globals.css";
+
+/** Read env on each request (Vercel dashboard changes apply without code edits). */
+export const dynamic = "force-dynamic";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,28 +18,34 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: `${SITE.name} — Terminal file explorer`,
-    template: `%s · ${SITE.name}`,
-  },
-  description: SITE.description,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const site = getSiteConfig();
+  return {
+    metadataBase: new URL(site.siteUrl),
+    title: {
+      default: `${site.name} — Terminal file explorer`,
+      template: `%s · ${site.name}`,
+    },
+    description: site.description,
+  };
+}
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const site = getSiteConfig();
+
   return (
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col font-sans">
-        <SiteHeader />
+        <SiteHeader site={site} />
         <main className="flex-1">{children}</main>
-        <SiteFooter />
+        <SiteFooter site={site} />
       </body>
     </html>
   );

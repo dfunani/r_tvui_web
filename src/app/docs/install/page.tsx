@@ -1,9 +1,13 @@
 import Link from "next/link";
 import { DocPage } from "@/components/doc-page";
+import { getSiteConfig } from "@/lib/site-config";
+import { docBlob } from "@/lib/site";
 
 export const metadata = { title: "Install" };
 
-export default function InstallPage() {
+export default async function InstallPage() {
+  const site = getSiteConfig();
+
   return (
     <DocPage
       title="Install"
@@ -17,36 +21,31 @@ export default function InstallPage() {
       <ol>
         <li>
           Open{" "}
-          <a
-            href="https://github.com/dfunani/r_tvui/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href={site.releasesUrl} target="_blank" rel="noopener noreferrer">
             GitHub Releases
           </a>
         </li>
         <li>Download the asset for your OS (see table on the Download page)</li>
-        <li>Extract or install the <code className="font-mono">.deb</code></li>
-        <li>Run <code className="font-mono">r_tvui</code></li>
+        <li>Extract the archive and make the binary executable</li>
+        <li>
+          Run <code className="font-mono">r_tvui</code> (or{" "}
+          <code className="font-mono">r_tvui ~/path</code> to start elsewhere)
+        </li>
       </ol>
 
       <p>
-        Step-by-step commands: <Link href="/download">Download</Link>.
+        Step-by-step commands: <Link href="/download">Download</Link> or{" "}
+        <a href={docBlob(site, "INSTALL.md")} target="_blank" rel="noopener noreferrer">
+          docs/INSTALL.md
+        </a>
+        .
       </p>
 
-      <h2>Linux: two easy options</h2>
-      <ul>
-        <li>
-          <strong>Ubuntu / Debian</strong> — download{" "}
-          <code className="font-mono">r-tvui_*_amd64.deb</code>, then{" "}
-          <code className="font-mono">sudo apt install ./r-tvui_*.deb</code>
-        </li>
-        <li>
-          <strong>Any distro</strong> — download the{" "}
-          <code className="font-mono">.tar.gz</code>, extract, move to{" "}
-          <code className="font-mono">~/.local/bin</code>
-        </li>
-      </ul>
+      <h2>Linux</h2>
+      <p>
+        Download the <code className="font-mono">.tar.gz</code>, extract, move to{" "}
+        <code className="font-mono">~/.local/bin</code>, and ensure it is on your PATH.
+      </p>
 
       <h2>macOS & Windows</h2>
       <p>
@@ -56,9 +55,10 @@ export default function InstallPage() {
 
       <h2>Configuration</h2>
       <p>
-        Themes persist at{" "}
-        <code className="font-mono">~/.config/rtvui/config.toml</code> after you
-        press <code className="font-mono">t</code> in the app.
+        Settings persist at{" "}
+        <code className="font-mono">~/.config/rtvui/config.toml</code> (theme, sort,
+        bookmarks, trash preference). Press <code className="font-mono">t</code> to
+        cycle themes in the app.
       </p>
 
       <h2>Troubleshooting</h2>

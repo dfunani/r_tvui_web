@@ -1,9 +1,11 @@
 import { DocPage } from "@/components/doc-page";
-import { SITE } from "@/lib/site";
+import { getSiteConfig } from "@/lib/site-config";
 
 export const metadata = { title: "Contributing" };
 
-export default function ContributingPage() {
+export default async function ContributingPage() {
+  const site = getSiteConfig();
+
   return (
     <DocPage
       title="Contributing"
@@ -17,7 +19,12 @@ export default function ContributingPage() {
 
       <h2>Getting set up</h2>
       <ol>
-        <li>Fork and clone {SITE.repoUrl}</li>
+        <li>
+          Fork and clone{" "}
+          <a href={site.repoUrl} target="_blank" rel="noopener noreferrer">
+            {site.repoUrl}
+          </a>
+        </li>
         <li>
           Read <a href="/docs/development">Development</a> and{" "}
           <a href="/docs/architecture">Architecture</a>
@@ -46,11 +53,7 @@ export default function ContributingPage() {
       <h2>Reporting issues</h2>
       <p>
         Use{" "}
-        <a
-          href={`${SITE.repoUrl}/issues`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a href={site.issuesUrl} target="_blank" rel="noopener noreferrer">
           GitHub Issues
         </a>
         . Include OS, terminal emulator, steps to reproduce, and screenshots if UI-related.

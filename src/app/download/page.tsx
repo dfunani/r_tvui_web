@@ -1,13 +1,24 @@
 import Link from "next/link";
 import { CodeBlock } from "@/components/code-block";
 import { DocPage } from "@/components/doc-page";
-import { INSTALL_SNIPPET, SITE } from "@/lib/site";
+import { getSiteConfig } from "@/lib/site-config";
+import {
+  docBlob,
+  installSnippets,
+  releaseDownloadLatest,
+  releaseDownloadVersioned,
+  releaseTargets,
+} from "@/lib/site";
 
 export const metadata = {
   title: "Download",
 };
 
-export default function DownloadPage() {
+export default async function DownloadPage() {
+  const site = getSiteConfig();
+  const snippets = installSnippets(site);
+  const targets = releaseTargets(site);
+
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
       <DocPage
@@ -15,97 +26,103 @@ export default function DownloadPage() {
         description="Prebuilt binaries from GitHub Releases. No Rust, no package manager setup."
       >
         <p>
-          Go to{" "}
-          <a href={SITE.releasesUrl} target="_blank" rel="noopener noreferrer">
+          Pick your platform below, or open{" "}
+          <a href={site.releasesUrl} target="_blank" rel="noopener noreferrer">
             GitHub Releases
-          </a>
-          , pick the file for your system, and follow the steps below.
+          </a>{" "}
+          (latest tag: <code className="font-mono">v{site.releaseVersion}</code>
+          ).
         </p>
 
-        <h2>Which file do I need?</h2>
+        <p className="text-sm text-[var(--gt-muted)]">
+          Scripts use <code className="font-mono">curl -fL</code> so a missing
+          asset fails loudly. If you get a 404, the release may not have CI
+          binaries yet — download the matching file manually from Releases.
+        </p>
+
+        <h2>Direct downloads</h2>
         <table>
           <thead>
             <tr>
               <th>Platform</th>
-              <th>Download</th>
+              <th>File</th>
+              <th>Link</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>macOS (Apple Silicon)</td>
-              <td>
-                <code className="font-mono">r_tvui-*-aarch64-apple-darwin.tar.gz</code>
-              </td>
-            </tr>
-            <tr>
-              <td>macOS (Intel)</td>
-              <td>
-                <code className="font-mono">r_tvui-*-x86_64-apple-darwin.tar.gz</code>
-              </td>
-            </tr>
-            <tr>
-              <td>Ubuntu / Debian</td>
-              <td>
-                <code className="font-mono">r-tvui_*_amd64.deb</code> (easiest)
-              </td>
-            </tr>
-            <tr>
-              <td>Other Linux</td>
-              <td>
-                <code className="font-mono">r_tvui-*-x86_64-unknown-linux-gnu.tar.gz</code>
-              </td>
-            </tr>
-            <tr>
-              <td>Windows</td>
-              <td>
-                <code className="font-mono">r_tvui-*-x86_64-pc-windows-msvc.zip</code>
-              </td>
-            </tr>
+            {targets.map(({ label, target, hint }) => (
+              <tr key={target}>
+                <td>{label}</td>
+                <td>
+                  <code className="font-mono text-xs">{hint}</code>
+                </td>
+                <td>
+                  <a
+                    href={releaseDownloadLatest(site, target)}
+                    className="font-medium text-[var(--gt-accent)] hover:underline"
+                  >
+                    Latest
+                  </a>
+                  {" · "}
+                  <a
+                    href={releaseDownloadVersioned(site, target)}
+                    className="text-sm text-[var(--gt-muted)] hover:underline"
+                  >
+                    v{site.releaseVersion}
+                  </a>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
 
         <h2>macOS (Apple Silicon)</h2>
-        <CodeBlock>{`curl -LO ${SITE.releasesUrl}/latest/download/r_tvui-aarch64-apple-darwin.tar.gz
-tar xzf r_tvui-aarch64-apple-darwin.tar.gz
-chmod +x r_tvui
-sudo mv r_tvui /usr/local/bin/
-r_tvui`}</CodeBlock>
-
-        <h2>Ubuntu / Debian (.deb)</h2>
-        <CodeBlock>{`curl -LO ${SITE.releasesUrl}/latest/download/r-tvui_0.1.0_amd64.deb
-sudo apt install ./r-tvui_0.1.0_amd64.deb
-r_tvui`}</CodeBlock>
-        <p className="text-sm">
-          Replace <code className="font-mono">0.1.0</code> with the version tag on the
-          release page if newer.
+        <CodeBlock>{snippets.macosArm}</CodeBlock>
+        <p className="text-sm text-[var(--gt-muted)]">
+          If macOS blocks the app:{" "}
+          <code className="font-mono">{snippets.macosQuarantine}</code>
         </p>
 
-        <h2>Linux (tarball)</h2>
-        <CodeBlock>{`curl -LO ${SITE.releasesUrl}/latest/download/r_tvui-x86_64-unknown-linux-gnu.tar.gz
-tar xzf r_tvui-x86_64-unknown-linux-gnu.tar.gz
-chmod +x r_tvui
-mv r_tvui ~/.local/bin/
-r_tvui`}</CodeBlock>
+        <h2>macOS (Intel)</h2>
+        <CodeBlock>{snippets.macosIntel}</CodeBlock>
+
+        <h2>Linux (x86_64)</h2>
+        <CodeBlock>{snippets.linuxTar}</CodeBlock>
+        <p className="text-sm text-[var(--gt-muted)]">
+          For opening files with Enter, install{" "}
+          <code className="font-mono">xdg-utils</code> if needed.
+        </p>
 
         <h2>Windows</h2>
+        <p>{snippets.windowsNote}</p>
         <p>
-          Download the <code className="font-mono">.zip</code> from Releases, extract,
-          and run <code className="font-mono">r_tvui.exe</code>.
+          Or download:{" "}
+          <a
+            href={releaseDownloadLatest(site, "x86_64-pc-windows-msvc")}
+            className="text-[var(--gt-accent)] hover:underline"
+          >
+            latest zip
+          </a>
         </p>
 
+        <h2>After install</h2>
+        <CodeBlock>{`r_tvui                  # current directory
+r_tvui ~/Projects       # start in a folder
+r_tvui --version`}</CodeBlock>
+
         <h2>Developers</h2>
-        <CodeBlock title="Requires Rust">{INSTALL_SNIPPET.fromSource}</CodeBlock>
+        <CodeBlock title="Requires Rust">{snippets.fromSource}</CodeBlock>
 
         <p>
-          Full guide in the repo:{" "}
+          Full guide:{" "}
           <a
-            href="https://github.com/dfunani/r_tvui/blob/master/docs/INSTALL.md"
+            href={docBlob(site, "INSTALL.md")}
             target="_blank"
             rel="noopener noreferrer"
           >
             docs/INSTALL.md
           </a>
-          . Maintainers:{" "}
+          . Usage keys: <Link href="/docs/usage">Using R-TVUI</Link>. Maintainers:{" "}
           <Link href="/docs/distribution">distribution & CI</Link>.
         </p>
       </DocPage>

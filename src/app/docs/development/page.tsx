@@ -1,9 +1,14 @@
 import { CodeBlock } from "@/components/code-block";
 import { DocPage } from "@/components/doc-page";
+import { getSiteConfig } from "@/lib/site-config";
+import { installSnippets } from "@/lib/site";
 
 export const metadata = { title: "Development" };
 
-export default function DevelopmentPage() {
+export default async function DevelopmentPage() {
+  const site = getSiteConfig();
+  const snippets = installSnippets(site);
+
   return (
     <DocPage
       title="Development"
@@ -16,9 +21,7 @@ export default function DevelopmentPage() {
       </ul>
 
       <h2>Clone & run</h2>
-      <CodeBlock>{`git clone https://github.com/dfunani/r_tvui.git
-cd r_tvui
-cargo run --release`}</CodeBlock>
+      <CodeBlock>{snippets.fromSource}</CodeBlock>
 
       <h2>Tests</h2>
       <CodeBlock>{`cargo test --workspace`}</CodeBlock>
@@ -48,7 +51,8 @@ cargo run --release`}</CodeBlock>
 npm install
 npm run dev`}</CodeBlock>
       <p>
-        Open <a href="http://localhost:3000">http://localhost:3000</a>.
+        Open <a href={site.siteUrl}>{site.siteUrl}</a> (set{" "}
+        <code className="font-mono">SITE_URL</code> in Vercel).
       </p>
     </DocPage>
   );

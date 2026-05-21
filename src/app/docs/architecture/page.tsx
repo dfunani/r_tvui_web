@@ -1,8 +1,12 @@
 import { DocPage } from "@/components/doc-page";
+import { getSiteConfig } from "@/lib/site-config";
+import { docBlob } from "@/lib/site";
 
 export const metadata = { title: "Architecture" };
 
-export default function ArchitecturePage() {
+export default async function ArchitecturePage() {
+  const site = getSiteConfig();
+
   return (
     <DocPage
       title="Architecture"
@@ -44,19 +48,11 @@ export default function ArchitecturePage() {
 
       <p>
         Full specifications:{" "}
-        <a
-          href="https://github.com/dfunani/r_tvui/blob/master/docs/DESIGN_SPEC.md"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a href={docBlob(site, "DESIGN_SPEC.md")} target="_blank" rel="noopener noreferrer">
           DESIGN_SPEC.md
         </a>{" "}
         and{" "}
-        <a
-          href="https://github.com/dfunani/r_tvui/blob/master/docs/IMPLEMENTATION_PLAN.md"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a href={docBlob(site, "IMPLEMENTATION_PLAN.md")} target="_blank" rel="noopener noreferrer">
           IMPLEMENTATION_PLAN.md
         </a>{" "}
         in the main repo.

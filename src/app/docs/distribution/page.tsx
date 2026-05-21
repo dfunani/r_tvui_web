@@ -1,8 +1,12 @@
 import { DocPage } from "@/components/doc-page";
+import { getSiteConfig } from "@/lib/site-config";
+import { docBlob } from "@/lib/site";
 
 export const metadata = { title: "Distribution" };
 
-export default function DistributionPage() {
+export default async function DistributionPage() {
+  const site = getSiteConfig();
+
   return (
     <DocPage
       title="Distribution (maintainers)"
@@ -10,11 +14,7 @@ export default function DistributionPage() {
     >
       <p>
         <strong>Users</strong> should follow{" "}
-        <a
-          href="https://github.com/dfunani/r_tvui/blob/master/docs/INSTALL.md"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a href={docBlob(site, "INSTALL.md")} target="_blank" rel="noopener noreferrer">
           docs/INSTALL.md
         </a>{" "}
         or the <a href="/download">Download page</a>.
@@ -25,7 +25,6 @@ export default function DistributionPage() {
       <ul>
         <li>macOS tarballs (ARM + Intel)</li>
         <li>Linux tarball</li>
-        <li>Linux <code className="font-mono">.deb</code> for Ubuntu/Debian</li>
         <li>Windows zip</li>
       </ul>
 
@@ -43,11 +42,7 @@ export default function DistributionPage() {
 
       <p>
         Full details:{" "}
-        <a
-          href="https://github.com/dfunani/r_tvui/blob/master/docs/DISTRIBUTION.md"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a href={docBlob(site, "DISTRIBUTION.md")} target="_blank" rel="noopener noreferrer">
           docs/DISTRIBUTION.md
         </a>
       </p>
