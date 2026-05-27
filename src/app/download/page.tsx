@@ -35,9 +35,17 @@ export default async function DownloadPage() {
         </p>
 
         <p className="text-sm text-[var(--gt-muted)]">
-          Scripts use <code className="font-mono">curl -fL</code> so a missing
-          asset fails loudly. If you get a 404, the release may not have CI
-          binaries yet — download the matching file manually from Releases.
+          Install scripts use versioned URLs (e.g.{" "}
+          <code className="font-mono">
+            r_tvui-{site.releaseVersion}-aarch64-unknown-linux-gnu.tar.gz
+          </code>
+          ) so they work as soon as the tag is published. <strong>Latest</strong>{" "}
+          links use short names (e.g.{" "}
+          <code className="font-mono">r_tvui-aarch64-unknown-linux-gnu.tar.gz</code>
+          ). On Linux, run <code className="font-mono">uname -m</code>:{" "}
+          <code className="font-mono">aarch64</code> needs the ARM64 Linux build, not
+          x86_64. If you see <code className="font-mono">exec format error</code>, you
+          picked the wrong architecture.
         </p>
 
         <h2>Direct downloads</h2>
@@ -86,11 +94,17 @@ export default async function DownloadPage() {
         <h2>macOS (Intel)</h2>
         <CodeBlock>{snippets.macosIntel}</CodeBlock>
 
-        <h2>Linux (x86_64)</h2>
-        <CodeBlock>{snippets.linuxTar}</CodeBlock>
+        <h2>Linux — pick your CPU</h2>
+        <CodeBlock title="Check architecture">{snippets.archHint}</CodeBlock>
+
+        <h3>Linux (x86_64 — Intel / AMD)</h3>
+        <CodeBlock>{snippets.linuxX64}</CodeBlock>
+
+        <h3>Linux (ARM64 — aarch64 VPS, Raspberry Pi, etc.)</h3>
+        <CodeBlock>{snippets.linuxArm}</CodeBlock>
         <p className="text-sm text-[var(--gt-muted)]">
-          For opening files with Enter, install{" "}
-          <code className="font-mono">xdg-utils</code> if needed.
+          Do not use the macOS Apple Silicon build on Linux. For opening files with
+          Enter, install <code className="font-mono">xdg-utils</code> if needed.
         </p>
 
         <h2>Windows</h2>

@@ -29,7 +29,7 @@ All config is read **on the server at request time** — not baked into the clie
 | `SITE_URL` | Canonical site URL (metadata, links) |
 | `GITHUB_REPO_URL` | Main repo (nav, clone, doc blob links) |
 | `GITHUB_DEFAULT_BRANCH` | Branch for `docs/*.md` links (default `master`) |
-| `RELEASE_VERSION` | Latest release without `v` (e.g. `1.0.0`) for versioned download URLs |
+| `RELEASE_VERSION` | Latest release without `v` (e.g. `2.0.0`) for versioned download URLs |
 | `GITHUB_RELEASES_URL` | Optional; defaults to `{repo}/releases` |
 | `SITE_NAME`, `SITE_TAGLINE`, `SITE_DESCRIPTION` | Optional branding |
 

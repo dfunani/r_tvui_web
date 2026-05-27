@@ -13,6 +13,7 @@ export type ReleaseTarget =
   | "aarch64-apple-darwin"
   | "x86_64-apple-darwin"
   | "x86_64-unknown-linux-gnu"
+  | "aarch64-unknown-linux-gnu"
   | "x86_64-pc-windows-msvc";
 
 export type SiteConfig = {
@@ -49,7 +50,7 @@ export const getSiteConfig = cache((): SiteConfig => {
   const releaseVersion = readEnv(
     "RELEASE_VERSION",
     "NEXT_PUBLIC_RELEASE_VERSION",
-    "1.0.0",
+    "2.0.0",
   ).replace(/^v/, "");
 
   return {

@@ -43,7 +43,12 @@ export default async function InstallPage() {
 
       <h2>Linux</h2>
       <p>
-        Download the <code className="font-mono">.tar.gz</code>, extract, move to{" "}
+        Run <code className="font-mono">uname -m</code> first:{" "}
+        <code className="font-mono">x86_64</code> →{" "}
+        <code className="font-mono">x86_64-unknown-linux-gnu</code>;{" "}
+        <code className="font-mono">aarch64</code> →{" "}
+        <code className="font-mono">aarch64-unknown-linux-gnu</code>. Extract the{" "}
+        <code className="font-mono">.tar.gz</code>, move to{" "}
         <code className="font-mono">~/.local/bin</code>, and ensure it is on your PATH.
       </p>
 
@@ -73,6 +78,13 @@ export default async function InstallPage() {
           <tr>
             <td>command not found</td>
             <td>Add the binary to PATH or run with ./r_tvui</td>
+          </tr>
+          <tr>
+            <td>Linux: exec format error</td>
+            <td>
+              Wrong CPU build — use ARM64 Linux on aarch64, x86_64 on Intel/AMD (see{" "}
+              <Link href="/download">Download</Link>)
+            </td>
           </tr>
           <tr>
             <td>Linux: file won&apos;t open on Enter</td>
