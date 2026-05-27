@@ -44,7 +44,7 @@ export function mainNav(site: SiteConfig) {
   ];
 }
 
-function installTarball(
+function manualInstall(
   site: SiteConfig,
   target: ReleaseTarget,
   installLine: string,
@@ -59,23 +59,28 @@ r_tvui`;
 }
 
 export function installSnippets(site: SiteConfig) {
+  const installScriptUrl = `${site.repoUrl}/raw/${site.defaultBranch}/scripts/install.sh`;
+
   return {
-    macosArm: installTarball(
+    curlInstall: `curl -fsSL ${installScriptUrl} | bash`,
+    curlInstallPinned: `RTVUI_VERSION=${site.releaseVersion} curl -fsSL ${installScriptUrl} | bash`,
+    pathHint: `export PATH="$HOME/.local/bin:$PATH"`,
+    macosArm: manualInstall(
       site,
       "aarch64-apple-darwin",
       "sudo mv r_tvui /usr/local/bin/   # optional: install globally",
     ),
-    macosIntel: installTarball(
+    macosIntel: manualInstall(
       site,
       "x86_64-apple-darwin",
       "mv r_tvui ~/.local/bin/   # ensure ~/.local/bin is on PATH",
     ),
-    linuxX64: installTarball(
+    linuxX64: manualInstall(
       site,
       "x86_64-unknown-linux-gnu",
       "mv r_tvui ~/.local/bin/   # ensure ~/.local/bin is on PATH",
     ),
-    linuxArm: installTarball(
+    linuxArm: manualInstall(
       site,
       "aarch64-unknown-linux-gnu",
       "mv r_tvui ~/.local/bin/   # ensure ~/.local/bin is on PATH",

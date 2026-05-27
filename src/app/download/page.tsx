@@ -26,16 +26,25 @@ export default async function DownloadPage() {
         description="Prebuilt binaries from GitHub Releases. No Rust, no package manager setup."
       >
         <p>
-          Pick your platform below, or open{" "}
+          Pick your platform below, or run the install script. Latest tag:{" "}
+          <code className="font-mono">v{site.releaseVersion}</code> ·{" "}
           <a href={site.releasesUrl} target="_blank" rel="noopener noreferrer">
-            GitHub Releases
-          </a>{" "}
-          (latest tag: <code className="font-mono">v{site.releaseVersion}</code>
-          ).
+            all releases
+          </a>
+          .
+        </p>
+
+        <h2>One-liner install</h2>
+        <CodeBlock>{snippets.curlInstall}</CodeBlock>
+        <p className="text-sm text-[var(--gt-muted)]">
+          Pin a version:{" "}
+          <code className="font-mono">{snippets.curlInstallPinned}</code>
+          . Installs to <code className="font-mono">~/.local/bin</code> — add to PATH if needed:{" "}
+          <code className="font-mono">{snippets.pathHint}</code>
         </p>
 
         <p className="text-sm text-[var(--gt-muted)]">
-          Install scripts use versioned URLs (e.g.{" "}
+          Manual downloads below use versioned URLs (e.g.{" "}
           <code className="font-mono">
             r_tvui-{site.releaseVersion}-aarch64-unknown-linux-gnu.tar.gz
           </code>

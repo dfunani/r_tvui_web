@@ -71,8 +71,8 @@ export default async function HomePage() {
           </a>
         </div>
         <div className="mt-12">
-          <CodeBlock title="Quick install (macOS Apple Silicon)">
-            {snippets.macosArm}
+          <CodeBlock title="Quick install (macOS / Linux)">
+            {snippets.curlInstall}
           </CodeBlock>
         </div>
       </section>
@@ -100,7 +100,7 @@ export default async function HomePage() {
           Built for everyone in the project
         </h2>
         <p className="mt-2 max-w-2xl text-[var(--gt-muted)]">
-          Install from GitHub Releases in a few commands — no package manager
+          Run the install script or grab a release tarball — no package manager
           setup required.
         </p>
         <div className="mt-10 grid gap-6 md:grid-cols-3">

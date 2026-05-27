@@ -22,12 +22,14 @@ export default async function GettingStartedPage() {
 
       <h2>1. Install</h2>
       <p>
-        Download from{" "}
-        <Link href="/download">Download</Link> or{" "}
-        <a href={site.releasesUrl} target="_blank" rel="noopener noreferrer">
-          GitHub Releases
-        </a>
-        . That is the only install step for most users.
+        The fastest path is the install script (downloads a release binary into{" "}
+        <code className="font-mono">~/.local/bin</code>). Windows: use the zip on{" "}
+        <Link href="/download">Download</Link>.
+      </p>
+      <CodeBlock>{snippets.curlInstall}</CodeBlock>
+      <p>
+        Manual tar/zip steps: <Link href="/download">Download</Link> ·{" "}
+        <Link href="/docs/install">Install guide</Link>.
       </p>
 
       <h2>2. Run</h2>

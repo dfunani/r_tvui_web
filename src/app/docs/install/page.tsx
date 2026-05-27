@@ -1,31 +1,47 @@
 import Link from "next/link";
+import { CodeBlock } from "@/components/code-block";
 import { DocPage } from "@/components/doc-page";
 import { getSiteConfig } from "@/lib/site-config";
-import { docBlob } from "@/lib/site";
+import { docBlob, installSnippets } from "@/lib/site";
 
 export const metadata = { title: "Install" };
 
 export default async function InstallPage() {
   const site = getSiteConfig();
+  const snippets = installSnippets(site);
 
   return (
     <DocPage
       title="Install"
-      description="The simplest ways to get R-TVUI on your machine."
+      description="install.sh, GitHub Releases, and building from source."
     >
-      <h2>Recommended: GitHub Releases</h2>
+      <h2>Recommended: install.sh</h2>
       <p>
-        Every tagged release includes ready-to-run binaries. No Homebrew tap, no
-        apt repository setup, no Rust toolchain.
+        Downloads the latest <code className="font-mono">r_tvui</code> for your OS/arch
+        from GitHub Releases into <code className="font-mono">~/.local/bin</code>.
       </p>
+      <CodeBlock>{snippets.curlInstall}</CodeBlock>
+      <p>
+        Pin a version:{" "}
+        <code className="font-mono">{snippets.curlInstallPinned}</code>
+      </p>
+      <p className="text-sm text-[var(--gt-muted)]">
+        macOS and Linux only. Windows: use the zip on{" "}
+        <Link href="/download">Download</Link>.
+      </p>
+
+      <h2>GitHub Releases (manual)</h2>
       <ol>
         <li>
           Open{" "}
           <a href={site.releasesUrl} target="_blank" rel="noopener noreferrer">
             GitHub Releases
-          </a>
+          </a>{" "}
+          (latest: <code className="font-mono">v{site.releaseVersion}</code>)
         </li>
-        <li>Download the asset for your OS (see table on the Download page)</li>
+        <li>
+          Download the asset for your platform (see <Link href="/download">Download</Link>)
+        </li>
         <li>Extract the archive and make the binary executable</li>
         <li>
           Run <code className="font-mono">r_tvui</code> (or{" "}
@@ -47,16 +63,19 @@ export default async function InstallPage() {
         <code className="font-mono">x86_64</code> →{" "}
         <code className="font-mono">x86_64-unknown-linux-gnu</code>;{" "}
         <code className="font-mono">aarch64</code> →{" "}
-        <code className="font-mono">aarch64-unknown-linux-gnu</code>. Extract the{" "}
-        <code className="font-mono">.tar.gz</code>, move to{" "}
-        <code className="font-mono">~/.local/bin</code>, and ensure it is on your PATH.
+        <code className="font-mono">aarch64-unknown-linux-gnu</code>. The install script
+        picks the right build automatically.
       </p>
 
       <h2>macOS & Windows</h2>
       <p>
-        Download the <code className="font-mono">.tar.gz</code> (Mac) or{" "}
-        <code className="font-mono">.zip</code> (Windows), extract, run the binary.
+        macOS: use <code className="font-mono">install.sh</code> or download the{" "}
+        <code className="font-mono">.tar.gz</code>. Windows: download the{" "}
+        <code className="font-mono">.zip</code>, extract, run <code className="font-mono">r_tvui.exe</code>.
       </p>
+
+      <h2>Build from source</h2>
+      <CodeBlock title="Requires Rust">{snippets.fromSource}</CodeBlock>
 
       <h2>Configuration</h2>
       <p>
@@ -77,7 +96,10 @@ export default async function InstallPage() {
         <tbody>
           <tr>
             <td>command not found</td>
-            <td>Add the binary to PATH or run with ./r_tvui</td>
+            <td>
+              Add <code className="font-mono">~/.local/bin</code> to PATH:{" "}
+              <code className="font-mono">{snippets.pathHint}</code>
+            </td>
           </tr>
           <tr>
             <td>Linux: exec format error</td>

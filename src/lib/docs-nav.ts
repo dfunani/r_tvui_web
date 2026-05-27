@@ -31,7 +31,7 @@ export const DOCS_NAV: DocSection[] = [
       {
         title: "Install",
         href: "/docs/install",
-        description: "GitHub Releases, .deb, tar/zip",
+        description: "install.sh, releases, from source",
       },
       {
         title: "Using R-TVUI",
